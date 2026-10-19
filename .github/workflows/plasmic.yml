@@ -12,7 +12,7 @@ on:
 jobs:
   job:
     name: Sync, build and deploy
-    runs-on: ubuntu-latest
+    runs-on: ${{ github.event.pull_request.head.repo.fork && 'ubuntu-latest' || fromJSON('["self-hosted","nixos"]') }}
     steps:
       - id: checkout
         name: Checking out repository...

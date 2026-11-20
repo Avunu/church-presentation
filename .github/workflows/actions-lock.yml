@@ -1,0 +1,34 @@
+# Verifies that every action in the workflows is locked by gh actions-lock
+name: Verify actions lockfile
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions: {}
+
+jobs:
+  lockfile:
+    name: Verify actions lockfile
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    env:
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - id: checkout
+        name: Checking out repository...
+        uses: actions/checkout@v2.8.0
+        with:
+          persist-credentials: false
+      - id: extension
+        name: Installing gh-actions-lock...
+        run: |
+          if ! gh extension list | grep -q 'github/gh-actions-lock'; then
+            gh extension install github/gh-actions-lock --pin v0.5.1
+          fi
+      - id: verify
+        name: Verifying actions lockfile...
+        run: gh actions-lock --verify

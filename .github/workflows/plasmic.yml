@@ -16,18 +16,18 @@ jobs:
     steps:
       - id: checkout
         name: Checking out repository...
-        uses: actions/checkout@v2
+        uses: actions/checkout@v2.8.0
         with:
           persist-credentials: false
           fetch-depth: 0
       - id: node
         name: Setting up node v18...
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v3.9.1
         with:
           node-version: "18"
       - id: cache
         name: Recovering cache...
-        uses: actions/cache@v4
+        uses: actions/cache@v4.3.0
         with:
           key: lock-${{ hashFiles('**/package-lock.json', '**/yarn.lock') }}
           path: ${{ github.event.client_payload.data.directory }}/node_modules
@@ -71,7 +71,7 @@ jobs:
           platform: ${{ github.event.client_payload.data.platform }}
       - id: pr
         name: Creating pull request...
-        uses: repo-sync/pull-request@v2
+        uses: repo-sync/pull-request@v2.12.1
         if: ${{ steps.sync.outputs.new_branch }}
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}

@@ -20,7 +20,7 @@ jobs:
     steps:
       - id: checkout
         name: Checking out repository...
-        uses: actions/checkout@v2.8.0
+        uses: actions/checkout@v7.0.1
         with:
           persist-credentials: false
       - id: extension
